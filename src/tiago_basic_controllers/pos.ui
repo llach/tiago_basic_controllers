@@ -73,7 +73,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="lbl_des_r">
+        <widget class="QLabel" name="lbl_des_l">
          <property name="text">
           <string/>
          </property>
@@ -83,7 +83,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="lbl_des_l">
+        <widget class="QLabel" name="lbl_des_r">
          <property name="text">
           <string/>
          </property>
