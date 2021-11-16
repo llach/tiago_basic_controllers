@@ -1,4 +1,10 @@
+import os
+
 from qt_gui.plugin import Plugin
+from python_qt_binding import loadUi
+from python_qt_binding.QtCore import QThread
+from python_qt_binding.QtWidgets import QWidget
+from python_qt_binding import QtCore
 
 from controller_manager.controller_manager_interface import *
 from controller_manager_msgs.srv import ListControllers
@@ -7,10 +13,17 @@ from controller_manager_msgs.srv import ListControllers
 class ControllerGUI(object):
 
     def __init__(self):
-        print("initializing controllers ...")
         self.lc = rospy.ServiceProxy('controller_manager/list_controllers', ListControllers)
-
         self.cons = None
+
+        try:
+            self.setup_controllers()
+        except Exception as e:
+            print("could not connect to CM service: {}".format(e))
+
+    def setup_controllers(self):
+        print("initializing controllers ...")
+
         self.get_controllers()
         print("available controllers:")
         for c in self.cons:
@@ -77,3 +90,23 @@ class PositionGUI(Plugin, ControllerGUI):
         ]
 
         super(PositionGUI, self).__init__(context)
+        self.setObjectName('PositionGUI')
+
+        # Create QWidget
+        self._widget = QWidget()
+
+        # load widget UI layout
+        ui_file = os.path.join(os.path.dirname(os.path.realpath(__file__)),
+                               'pos.ui')
+        loadUi(ui_file, self._widget)
+
+        self._widget.setObjectName('PositionGUI')
+
+        # Show _widget.windowTitle on left-top of each plugin
+        if context.serial_number() > 1:
+            self._widget.setWindowTitle(self._widget.windowTitle() +
+                                        (' (%d)' % context.serial_number()))
+
+        # Add widget to the user interface
+        context.add_widget(self._widget)
+
