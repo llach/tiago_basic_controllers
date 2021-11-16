@@ -7,8 +7,6 @@ class VelocityGUI(PluginWrapper):
         self.ui_file = 'vel.ui'
         self.name = 'VelocityGUI'
 
-        print("velocityu")
-
         # controller manager
         self.used = [
             "gripper_left_finger_velocity_controller",
