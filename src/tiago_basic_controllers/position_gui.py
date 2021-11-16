@@ -22,9 +22,6 @@ class PositionGUI(PluginWrapper):
         
         super(PositionGUI, self).__init__(context)
 
-        self.sld_right.sliderReleased.connect(self.sliderRightReleased)
-        self.sld_left.sliderReleased.connect(self.sliderLeftReleased)
-
     def sliderRightChanged(self):
         v = self.sld_right.value() / 100.
         self.lbl_des_r.setText("desired right: {:.2f}".format(v))
@@ -32,9 +29,3 @@ class PositionGUI(PluginWrapper):
     def sliderLeftChanged(self):
         v = self.sld_left.value() / 100.
         self.lbl_des_l.setText("desired left: {:.2f}".format(v))
-
-    def sliderRightReleased(self):
-        self.sld_right.setValue(0.0)
-    
-    def sliderLeftReleased(self):
-        self.sld_left.setValue(0.0)

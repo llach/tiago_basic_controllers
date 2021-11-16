@@ -45,16 +45,13 @@
      <item>
       <widget class="QSlider" name="sld_right">
        <property name="minimum">
-        <number>0</number>
+        <number>-8</number>
        </property>
        <property name="maximum">
-        <number>45</number>
+        <number>8</number>
        </property>
        <property name="singleStep">
         <number>1</number>
-       </property>
-       <property name="value">
-        <number>0</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
@@ -70,10 +67,10 @@
      <item>
       <widget class="QSlider" name="sld_left">
        <property name="minimum">
-        <number>0</number>
+        <number>-8</number>
        </property>
        <property name="maximum">
-        <number>45</number>
+        <number>8</number>
        </property>
        <property name="orientation">
         <enum>Qt::Horizontal</enum>

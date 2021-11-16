@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <rosparam command="load" file="$(find tiago_basic_controllers)/config/position_controllers.yaml" />
+    <rosparam command="load" file="$(find tiago_basic_controllers)/config/velocity_controllers.yaml" />
+</launch>

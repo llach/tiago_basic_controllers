@@ -44,6 +44,7 @@ class PluginWrapper(Plugin):
         self.jssub = rospy.Subscriber("/joint_states", JointState, callback=self.joint_state_cb)
 
          # GUI widget shortcuts
+        self.lbl_title = self._widget.lbl_title
         self.lbl_status = self._widget.lbl_status
         self.lbl_right = self._widget.lbl_right
         self.lbl_left = self._widget.lbl_left
@@ -69,6 +70,7 @@ class PluginWrapper(Plugin):
         for l in [self.lbl_right, self.lbl_left]:
             l.setText("-")
 
+        self.lbl_title.setText(self.name)
 
     def joint_state_cb(self, jsmsg):
         # get joint indices

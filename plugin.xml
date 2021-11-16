@@ -1,5 +1,5 @@
 <library path="src">
-  <class name="tiago_basic_controllers" type="tiago_basic_controllers.position_gui.PositionGUI"
+  <class name="tiago_basic_controllers" type="tiago_basic_controllers.velocity_gui.VelocityGUI"
          base_class_type="rqt_gui_py::Plugin">
     <description>
       A GUI plugin to administer tiago_basic_controllers
@@ -10,9 +10,14 @@
         <icon type="theme">folder</icon>
         <statustip>Plugins related to me</statustip>
       </group>
-      <label>RQT Plugin tiago_basic_controllers</label>
+      <label>Basic Velocity</label>
       <icon type="theme">image-x-generic</icon>
-      <statustip>A GUI plugin to control positions</statustip>
+      <statustip>A GUI plugin to control velocities</statustip>
     </qtgui>
   </class>
 </library>
+
+<!-- 
+tiago_basic_controllers.velocity_gui.VelocityGUI
+tiago_basic_controllers.position_gui.PositionGUI 
+-->
