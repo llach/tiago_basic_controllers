@@ -3,7 +3,8 @@
          base_class_type="rqt_gui_py::Plugin">
     <description>
       A GUI plugin to administer tiago_basic_controllers
-    </descriptio
+    </description>
+    <qtgui>
       <group>
         <label>llach</label>
         <icon type="theme">folder</icon>
@@ -11,7 +12,7 @@
       </group>
       <label>RQT Plugin tiago_basic_controllers</label>
       <icon type="theme">image-x-generic</icon>
-      <statustip>A GUI plugin to position controllers</statustip>
+      <statustip>A GUI plugin to control positions</statustip>
     </qtgui>
   </class>
 </library>
