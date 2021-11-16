@@ -1,0 +1,13 @@
+<library path="src">
+  <class name="tiago_basic_controllers" type="tiago_basic_controllers.position_gui.PositionGUI"
+         base_class_type="rqt_gui_py::Plugin">
+    <description>
+      A GUI plugin to administer tiago_basic_controllers
+    </description>
+    <qtgui>
+      <label>RQT Plugin tiago_basic_controllers</label>
+      <icon type="theme">image-x-generic</icon>
+      <statustip>A GUI plugin to ...</statustip>
+    </qtgui>
+  </class>
+</library>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>tiago_basic_controllers</name>
+  <version>0.0.1</version>
+  <description>Experiment Controller for tiago_basic_controllers</description>
+
+  <maintainer email="luca.lach@pal-robotics.com">Luca Lach</maintainer>
+  <license>IDK</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rospy</build_depend>
+  <build_depend>rqt_gui_py</build_depend>
+
+  <export>
+    <rqt_gui plugin="${prefix}/plugin.xml"/>
+  </export>
+</package>

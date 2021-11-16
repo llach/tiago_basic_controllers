@@ -1,0 +1,7 @@
+gripper_left_finger_velocity_controller:
+  type: velocity_controllers/JointPositionController
+  joint: gripper_left_finger_joint
+
+gripper_right_finger_velocity_controller:
+  type: velocity_controllers/JointPositionController
+  joint: gripper_right_finger_joint
