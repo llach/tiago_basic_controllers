@@ -110,3 +110,14 @@ class PositionGUI(Plugin, ControllerGUI):
         # Add widget to the user interface
         context.add_widget(self._widget)
 
+        # GUI widget shortcuts
+        self.lbl_status = self._widget.lbl_status
+        self.lbl_right = self._widget.lbl_right
+        self.lbl_left = self._widget.lbl_left
+        self.lbl_des_r = self._widget.lbl_des_r
+        self.lbl_des_l = self._widget.lbl_des_l
+
+        for l in [self.lbl_status, self.lbl_right, self.lbl_left, self.lbl_des_r, self.lbl_des_l]:
+            l.setText("-")
+
+
