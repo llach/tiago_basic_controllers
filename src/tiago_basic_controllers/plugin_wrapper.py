@@ -3,12 +3,12 @@ import rospy
 
 from qt_gui.plugin import Plugin
 from python_qt_binding import loadUi
-from python_qt_binding.QtCore import QThread
 from python_qt_binding.QtWidgets import QWidget
 
 
 from sensor_msgs.msg import JointState
 from cm_interface import ControllerManagerInterface
+
 
 class PluginWrapper(Plugin):
 
@@ -86,7 +86,6 @@ class PluginWrapper(Plugin):
         self.sld_vel_right.setEnabled(False)
         self.sld_vel_left.setEnabled(False)
 
-
     def joint_state_cb(self, jsmsg):
         # get joint indices
         if self.jsl is None or self.jsr is None:
@@ -95,10 +94,17 @@ class PluginWrapper(Plugin):
                     self.jsr = i
                 elif n == self.lname:
                     self.jsl = i
+            self.set_pos_sliders([jsmsg.position[self.jsr], jsmsg.position[self.jsl]])
         self.state = [jsmsg.position[self.jsr], jsmsg.position[self.jsl]]
 
         self.lbl_right.setText("right pos: {:.4f}".format(self.state[0]))
         self.lbl_left.setText("left pos: {:.4f}".format(self.state[1]))
+
+    def set_pos_sliders(self, pos=None):
+        if pos == None:
+            pos = self.state
+        self.sld_pos_right.setValue(pos[0])
+        self.sld_pos_left.setValue(pos[1])
 
     def btnstate(self, m):
         self.cmode = m
