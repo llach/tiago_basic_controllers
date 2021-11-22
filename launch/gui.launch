@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
     <include file="$(find tiago_basic_controllers)/launch/load_controllers.launch" />
-    <node pkg="tiago_basic_controllers" type="vel_gui.py" name="bc_pos" output="screen" args="" />
+    <node pkg="tiago_basic_controllers" type="cont_gui.py" name="bc_pos" output="screen" args="" />
 </launch>

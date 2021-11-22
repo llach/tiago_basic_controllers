@@ -1,5 +1,5 @@
 <library path="src">
-  <class name="tiago_basic_controllers" type="tiago_basic_controllers.position_gui.PositionGUI"
+  <class name="tiago_basic_controllers" type="tiago_basic_controllers.control_gui.ControlGUI"
          base_class_type="rqt_gui_py::Plugin">
     <description>
       A GUI plugin to administer tiago_basic_controllers
@@ -16,8 +16,3 @@
     </qtgui>
   </class>
 </library>
-
-<!-- 
-tiago_basic_controllers.velocity_gui.VelocityGUI
-tiago_basic_controllers.position_gui.PositionGUI 
--->

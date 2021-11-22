@@ -8,7 +8,7 @@ from python_qt_binding.QtWidgets import QWidget
 
 
 from sensor_msgs.msg import JointState
-from controller_gui import ControllerGUI
+from cm_interface import ControllerManagerInterface
 
 class PluginWrapper(Plugin):
 
@@ -34,7 +34,7 @@ class PluginWrapper(Plugin):
         # Add widget to the user interface
         context.add_widget(self._widget)
         
-        self.cg = ControllerGUI(self.used, self.stopped)
+        self.cg = ControllerManagerInterface(self.used, self.stopped)
 
                 # joint state helpers
         self.jsr, self.jsl = None, None
@@ -51,12 +51,21 @@ class PluginWrapper(Plugin):
         self.lbl_des_r = self._widget.lbl_des_r
         self.lbl_des_l = self._widget.lbl_des_l
 
-        self.sld_right = self._widget.sld_right
-        self.sld_left = self._widget.sld_left
+        self.rb_pos = self._widget.rb_pos
+        self.rb_vel = self._widget.rb_vel
+
+        self.sld_pos_right = self._widget.sld_pos_right
+        self.sld_pos_left = self._widget.sld_pos_left
+
+        self.sld_vel_right = self._widget.sld_vel_right
+        self.sld_vel_left = self._widget.sld_vel_left
 
         # connect signals
-        self.sld_right.valueChanged.connect(self.sliderRightChanged)
-        self.sld_left.valueChanged.connect(self.sliderLeftChanged)
+        self.sld_pos_right.valueChanged.connect(self.posSliderRightChanged)
+        self.sld_pos_left.valueChanged.connect(self.posSliderLeftChanged)
+
+        self.rb_pos.toggled.connect(lambda:self.btnstate("pos"))
+        self.rb_vel.toggled.connect(lambda:self.btnstate("vel"))
 
         # set label defaults
         if self.cg.initialized:
@@ -70,7 +79,13 @@ class PluginWrapper(Plugin):
         for l in [self.lbl_right, self.lbl_left]:
             l.setText("-")
 
-        self.lbl_title.setText(self.name)
+        # radio btn setup
+        self.rb_pos.setChecked(True)
+        self.rb_vel.setChecked(False)
+
+        self.sld_vel_right.setEnabled(False)
+        self.sld_vel_left.setEnabled(False)
+
 
     def joint_state_cb(self, jsmsg):
         # get joint indices
@@ -84,4 +99,18 @@ class PluginWrapper(Plugin):
 
         self.lbl_right.setText("right pos: {:.4f}".format(self.state[0]))
         self.lbl_left.setText("left pos: {:.4f}".format(self.state[1]))
-        
+
+    def btnstate(self, m):
+        self.cmode = m
+        if m == "pos":
+            self.sld_pos_right.setEnabled(True)
+            self.sld_pos_left.setEnabled(True)
+
+            self.sld_vel_right.setEnabled(False)
+            self.sld_vel_left.setEnabled(False)
+        elif m == "vel":
+            self.sld_pos_right.setEnabled(False)
+            self.sld_pos_left.setEnabled(False)
+
+            self.sld_vel_right.setEnabled(True)
+            self.sld_vel_left.setEnabled(True)

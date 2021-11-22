@@ -3,7 +3,7 @@ import rospy
 from controller_manager.controller_manager_interface import *
 from controller_manager_msgs.srv import ListControllers
 
-class ControllerGUI(object):
+class ControllerManagerInterface(object):
 
     def __init__(self, used, stopped):
         self.used = used
