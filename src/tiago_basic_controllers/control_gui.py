@@ -1,29 +1,52 @@
 import rospy
+import numpy as np
 
 from python_qt_binding.QtCore import QThread
 from plugin_wrapper import PluginWrapper
 
+from simple_pid import PID
 from std_msgs.msg import Float64
 
 class PubThread(QThread):
 
-    def __init__(self,  rsld, lsld, rate=240):
+    def __init__(self,  rpsld, lpsld, rvsld, lvsld, cg, rate=240):
         super(QThread, self).__init__()
-        self.rsld = rsld
-        self.lsld = lsld
-        self.rate = rospy.Rate(rate)
+        self.r = rospy.Rate(rate)
+        self.dt = 1./rate
+
+        self.cg = cg
+        self.rate = rate
+
+        self.rpsld = rpsld
+        self.lpsld = lpsld
+
+        self.rvsld = rvsld
+        self.lvsld = lvsld
+
+        self.pid_right = PID()
+        self.pid_left = PID()
+        self.tunings = (1, 0.01, 0.0)
+
+        self.pid_right.tunings = self.tunings
+        self.pid_left.tunings = self.tunings
 
         self.rpub = rospy.Publisher("/gripper_right_finger_position_controller/command", Float64, queue_size=1)
         self.lpub = rospy.Publisher("/gripper_left_finger_position_controller/command", Float64, queue_size=1)
 
     def run(self):
         while not rospy.is_shutdown():
-            rv = self.rsld.value() / 1000.
-            lv = self.lsld.value() / 1000.
+            if self.cg.cmode == "pos":
+                rv = self.rpsld.value() / 1000.
+                lv = self.lpsld.value() / 1000.
+            elif self.cg.cmode == "vel":
+                rv = self.cg.current_pos[0] + ((self.rvsld.value() / 100.))
+                lv = self.cg.current_pos[1] + ((self.lvsld.value() / 100.))
+            else:
+                print("unkown control mode {}".format(self.cg.cmode))
 
             self.rpub.publish(rv)
             self.lpub.publish(lv)
-            self.rate.sleep()
+            self.r.sleep()
 
 
 class ControlGUI(PluginWrapper):
@@ -47,7 +70,7 @@ class ControlGUI(PluginWrapper):
         
         super(ControlGUI, self).__init__(context)
 
-        self.pt = PubThread(self.sld_pos_right, self.sld_pos_left)
+        self.pt = PubThread(self.sld_pos_right, self.sld_pos_left, self.sld_vel_right, self.sld_vel_left, self)
         self.pt.start()
 
         self.sld_vel_right.sliderReleased.connect(self.velSliderRightReleased)
