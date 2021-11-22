@@ -37,7 +37,7 @@ class PluginWrapper(Plugin):
         
         self.cg = ControllerManagerInterface(self.used, self.stopped)
 
-                # joint state helpers
+        # joint state helpers
         self.jsr, self.jsl = None, None
         self.rname, self.lname = "gripper_right_finger_joint", "gripper_left_finger_joint"
         self.state = []

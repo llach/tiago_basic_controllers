@@ -39,8 +39,14 @@ class PubThread(QThread):
                 rv = self.rpsld.value() / 1000.
                 lv = self.lpsld.value() / 1000.
             elif self.cg.cmode == "vel":
-                rv = self.cg.current_pos[0] + ((self.rvsld.value() / 100.))
-                lv = self.cg.current_pos[1] + ((self.lvsld.value() / 100.))
+                des_vr = self.rvsld.value() 
+                des_vl = self.lvsld.value() 
+
+                vr_err = ((self.current_vel[0]/100.) - des_vr)*self.dt
+                vl_err = ((self.current_vel[1]/100.) - des_vl)*self.dt
+
+                rv = self.cg.current_pos[0] + self.pid_right(vr_err)
+                lv = self.cg.current_pos[1] + self.pid_left(vl_err)
             else:
                 print("unkown control mode {}".format(self.cg.cmode))
 
