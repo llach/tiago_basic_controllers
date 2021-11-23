@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <node pkg="plotjuggler" type="PlotJuggler" name="plotjuggler" output="screen" args="-l $(find tiago_basic_controllers)/config/plot.xml" />
+</launch>

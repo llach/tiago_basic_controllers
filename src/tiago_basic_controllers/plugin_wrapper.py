@@ -63,9 +63,17 @@ class PluginWrapper(Plugin):
         self.sld_vel_right = self._widget.sld_vel_right
         self.sld_vel_left = self._widget.sld_vel_left
 
+        self.spin_p = self._widget.spin_p
+        self.spin_i = self._widget.spin_d
+        self.spin_d = self._widget.spin_i
+
+
         # connect signals
         self.sld_pos_right.valueChanged.connect(self.posSliderRightChanged)
         self.sld_pos_left.valueChanged.connect(self.posSliderLeftChanged)
+
+        self.sld_vel_right.valueChanged.connect(self.velSliderRightChanged)
+        self.sld_vel_left.valueChanged.connect(self.velSliderLeftChanged)
 
         self.rb_pos.toggled.connect(lambda:self.btnstate("pos"))
         self.rb_vel.toggled.connect(lambda:self.btnstate("vel"))
@@ -90,6 +98,8 @@ class PluginWrapper(Plugin):
         self.sld_vel_right.setEnabled(False)
         self.sld_vel_left.setEnabled(False)
 
+        self.current_pos, self.current_vel = 2*[0.0], 2*[0.0]
+
     def joint_state_cb(self, jsmsg):
         # get joint indices
         if self.jsl is None or self.jsr is None:
@@ -98,6 +108,7 @@ class PluginWrapper(Plugin):
                     self.jsr = i
                 elif n == self.lname:
                     self.jsl = i
+            print("R", self.jsr, "L", self.jsl)
             self.set_pos_sliders([jsmsg.position[self.jsr], jsmsg.position[self.jsl]])
 
         self.current_pos = np.round([jsmsg.position[self.jsr], jsmsg.position[self.jsl]], 4)
@@ -111,7 +122,7 @@ class PluginWrapper(Plugin):
 
     def set_pos_sliders(self, pos=None):
         if pos == None:
-            pos = self.state
+            pos = self.current_pos
         
         self.sld_pos_right.setValue(pos[0]*1000)
         self.sld_pos_left.setValue(pos[1]*1000)

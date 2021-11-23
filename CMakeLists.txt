@@ -15,7 +15,7 @@ include_directories(
 )
 
 install(PROGRAMS
-  scripts/pos.py
+  scripts/cont_gui.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
